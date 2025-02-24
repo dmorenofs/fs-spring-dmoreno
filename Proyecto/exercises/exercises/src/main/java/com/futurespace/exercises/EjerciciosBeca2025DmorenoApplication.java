@@ -13,7 +13,7 @@ public class EjerciciosBeca2025DmorenoApplication {
     public static void main(String[] args) {
       SpringApplication.run(EjerciciosBeca2025DmorenoApplication.class, args);
     }
-    @GetMapping("/hello")
+    @GetMapping("/byee")
     public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
       return String.format("Hello %s!", name);
     }

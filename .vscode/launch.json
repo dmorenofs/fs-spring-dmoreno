@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-EjerciciosBeca2025DmorenoApplication<exercises>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.futurespace.exercises.EjerciciosBeca2025DmorenoApplication",
+            "projectName": "exercises",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

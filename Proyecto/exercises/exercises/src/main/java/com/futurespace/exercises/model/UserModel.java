@@ -56,11 +56,10 @@ public class UserModel {
     public void setSex(String sex) {
         this.sex = sex;
     }
-    public String getUserId() {
+    public String getUserId(){
         return userId;
     }
-
-    public void setUserId(String userId) {
+    public void setUserId(String userId){
         this.userId = userId;
     }
 

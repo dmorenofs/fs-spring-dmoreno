@@ -31,9 +31,8 @@ public class UserController {
      * Exercise 1
      * 
      */
-    //We are not checking if the userId is correct, that will be done later when we implement services and repositories
     @GetMapping("/{userId}")
-    public UserModel getUser(@PathVariable String userId) {
+    public ResponseEntity<UserModel> getUser(@PathVariable String userId) {
       //Creating a user using the bean UserModel
       UserModel user = new UserModel(
         "Juan",
@@ -41,11 +40,16 @@ public class UserController {
         "Martin",
         LocalDate.of(2001, 2, 2),
         "Hombre",
-        userId
+        "123"
 
       );
+      if (userId.equals(user.getUserId())){
+        return new ResponseEntity<UserModel>(user, HttpStatus.OK);
+      }
+      else{
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
 
-        return user ;
     }
 
     /* 

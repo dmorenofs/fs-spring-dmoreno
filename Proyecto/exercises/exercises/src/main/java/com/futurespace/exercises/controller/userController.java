@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.futurespace.exercises.model.UserModel;
+import com.futurespace.exercises.seeder.Seeder;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -20,7 +24,8 @@ import com.futurespace.exercises.model.UserModel;
 @RequestMapping("/users")
 public class UserController {
 
-  private List<UserModel> usersList = new ArrayList<>();
+  //Filling the user list for Exercise 1 and 3, with a seed function to keep the controller clean
+  private List<UserModel> usersList = new ArrayList<>(Seeder.seedUsers());
 
     @GetMapping()
     public String getUsers() {
@@ -31,25 +36,15 @@ public class UserController {
      * Exercise 1
      * 
      */
-    @GetMapping("/{userId}")
+    @GetMapping(path="/{userId}")
     public ResponseEntity<UserModel> getUser(@PathVariable String userId) {
-      //Creating a user using the bean UserModel
-      UserModel user = new UserModel(
-        "Juan",
-        "Salazar",
-        "Martin",
-        LocalDate.of(2001, 2, 2),
-        "Hombre",
-        "123"
 
-      );
-      if (userId.equals(user.getUserId())){
-        return new ResponseEntity<UserModel>(user, HttpStatus.OK);
+      for (UserModel user: usersList){
+        if (userId.equals(user.getUserId())){
+          return new ResponseEntity<UserModel>(user, HttpStatus.OK);
+        } 
       }
-      else{
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-      }
-
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /* 
@@ -83,5 +78,39 @@ public class UserController {
       return new ResponseEntity<UserModel>(user, HttpStatus.CREATED);
     }
     
-    
-}
+    /* 
+     * Exercise 3
+     *   
+     */
+    //First, we show the data of user with ID 1 by calling the @GetMapping("/{userId}") controller with "http://localhost:8080/users/1"
+    //Then, we call the @PutMapping("/{userId}") controller with the same url, but now, we change the values via @RequestBody
+    //Finally, we call again the get user method and we can se that the data has changed 
+
+    @PutMapping(path = "/{userId}")
+    public ResponseEntity<UserModel> updateUser(@PathVariable String userId, @RequestBody UserModel updatedUser) {
+      UserModel storedUser = null;
+      for (UserModel user: usersList){
+        if (userId.equals(user.getUserId())){
+          storedUser = user;
+          break;
+        } 
+      }
+      if (storedUser != null) {
+        if (updatedUser.getName() != null) storedUser.setName(updatedUser.getName());
+        if (updatedUser.getFirstSurname() != null) storedUser.setFirstSurname(updatedUser.getFirstSurname());
+        if (updatedUser.getSecondSurname() != null) storedUser.setSecondSurname(updatedUser.getSecondSurname());
+        if (updatedUser.getBirthDate() != null) storedUser.setBirthDate(updatedUser.getBirthDate());
+        if (updatedUser.getSex() != null) storedUser.setSex(updatedUser.getSex());
+
+
+
+        return new ResponseEntity<>(storedUser, HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+        
+    }
+
+
+
+  }

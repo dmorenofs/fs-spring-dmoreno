@@ -6,4 +6,10 @@ Also, for the sake of simplicity, each exercise is highlighted in the code itsel
 
 The object model is replaced with "User" instead of "Persona" in this exercises, and "DNI" is replaced with "userId"
 
+Added to the proyect "Ejercicio 4":
+1-Show the data from an user in the list.
+2-Remove the user using the DELETE rest method
+3-Check that the user is no longer in the user list
+
+
 Note: Check that the UserController file starts with an Uppercase U, otherwise the proyect will give errors

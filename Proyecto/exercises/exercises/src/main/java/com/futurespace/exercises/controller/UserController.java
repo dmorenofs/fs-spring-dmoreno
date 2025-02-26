@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,9 +28,10 @@ public class UserController {
   //Filling the user list for Exercise 1 and 3, with a seed function to keep the controller clean
   private List<UserModel> usersList = new ArrayList<>(Seeder.seedUsers());
 
+    //Added a get all users method so we can check in Ejercicio 4 that the user is no longer in the list
     @GetMapping()
-    public String getUsers() {
-      return "getUsers was called";
+    public List<UserModel> getUsers() {
+      return usersList;
     }
 
     /* 
@@ -111,6 +113,30 @@ public class UserController {
         
     }
 
+    /* 
+     * Exercise 4
+     *   
+     */
+    //First, we show the data of user with ID 1 by calling the @GetMapping("/{userId}") controller with "http://localhost:8080/users/1"
+    //Then, we call the @DeleteMapping("/{userId}") controller with the same url
+    //Finally, we call the get all users method and we can se that the user is no longer in the list
+    @DeleteMapping(path = "/{userId}")
+    public ResponseEntity<UserModel> deleteUser(@PathVariable String userId) {
+      UserModel storedUser = null;
+      for (UserModel user: usersList){
+        if (userId.equals(user.getUserId())){
+          storedUser = user;
+          break;
+        } 
+      }
+      if (storedUser != null) {
+        usersList.remove(storedUser);
+        return new ResponseEntity<>(HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+        
+    }
 
 
   }

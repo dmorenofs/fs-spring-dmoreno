@@ -2,24 +2,30 @@ package com.futurespace.exercises.model;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
-public class UserModel {
-    
+//Class that will validate only the fields from the Put mapping method, it isn't required the same 
+//but for the post method because the instructions require the post mapping to be using @RequestParam
+//and in that case, the validation is done right next to the @RequestParam anotation
+public class UpdateUserDTO {
+    @Size(min=1, message = "Name cannot be empty if provided")
     private String name;
-    
+    @Size(min=1, message = "First surname cannot be empty if provided")
     private String firstSurname;
-    
+    @Size(min=1, message = "Second surname cannot be empty if provided")
     private String secondSurname;
-    
+    @Past
     private LocalDate birthDate;
-    
+    @Pattern(regexp = "^(M|F)$")
     private String sex;
     private String userId;
     private String fullName;
 
-    public UserModel(){}
+    public UpdateUserDTO(){}
 
-    public UserModel(String name, String firstSurname, String secondSurname, LocalDate birthDate, String sex, String userId){
+    public UpdateUserDTO(String name, String firstSurname, String secondSurname, LocalDate birthDate, String sex, String userId){
         this.name = name;
         this.firstSurname = firstSurname;
         this.secondSurname = secondSurname;

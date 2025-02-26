@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,8 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.futurespace.exercises.model.UpdateUserDTO;
 import com.futurespace.exercises.model.UserModel;
 import com.futurespace.exercises.seeder.Seeder;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
+
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -23,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/users")
+@Validated
 public class UserController {
 
   //Filling the user list for Exercise 1 and 3, with a seed function to keep the controller clean
@@ -54,18 +63,21 @@ public class UserController {
      * 
      */
     //Following the doc requirements, we need to collect the data from the URL
+    //First, we show the full list of users by calling the @GetMapping("/") controller with "http://localhost:8080/users"
+    //There we can check that the user we are about to create is not already there
+    //Then, we call the @PostMapping("/") controller, but adding the parameters in the url
+    //Finally, we call again the get users method and we can se that the new user is now in the list 
+
     @PostMapping
     public ResponseEntity<UserModel>createUser(
-      @RequestParam String name,
-      @RequestParam String firstSurname,
-      @RequestParam String lastSurname,
-      @RequestParam String birthDate,
-      @RequestParam String sex) {
+      @RequestParam @NotBlank String name,
+      @RequestParam @NotBlank String firstSurname,
+      @RequestParam @NotBlank String lastSurname,
+      @RequestParam @Past LocalDate birthDate,
+      @RequestParam @Pattern(regexp = "^(M|F)$") String sex) {
 
-      //Since birthDate is a string, we need to parse it to a LocalDate type
-      LocalDate parsedBirthDate = LocalDate.parse(birthDate);
       //It's also needed to create a new user object with the received info
-      UserModel user = new UserModel(name, firstSurname, lastSurname, parsedBirthDate, sex, "1");
+      UserModel user = new UserModel(name, firstSurname, lastSurname, birthDate, sex, "1");
       //Store the user in a list
       usersList.add(user);
       //It is requested to display the user info in the app console in a structured form
@@ -89,7 +101,7 @@ public class UserController {
     //Finally, we call again the get user method and we can se that the data has changed 
 
     @PutMapping(path = "/{userId}")
-    public ResponseEntity<UserModel> updateUser(@PathVariable String userId, @RequestBody UserModel updatedUser) {
+    public ResponseEntity<UserModel> updateUser(@PathVariable String userId, @Valid @RequestBody UpdateUserDTO updatedUser) {
       UserModel storedUser = null;
       for (UserModel user: usersList){
         if (userId.equals(user.getUserId())){

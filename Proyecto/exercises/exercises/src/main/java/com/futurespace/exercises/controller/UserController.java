@@ -3,6 +3,8 @@ package com.futurespace.exercises.controller;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.futurespace.exercises.model.UpdateUserDTO;
 import com.futurespace.exercises.model.UserModel;
 import com.futurespace.exercises.seeder.Seeder;
+import com.futurespace.exercises.service.UserService;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -34,13 +37,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Validated
 public class UserController {
 
-  //Filling the user list for Exercise 1 and 3, with a seed function to keep the controller clean
-  private List<UserModel> usersList = new ArrayList<>(Seeder.seedUsers());
+    //@Autowired is not needed since there's only 1 class constructor, according to Spring docs
+    private final UserService userService;
+    public UserController(UserService userService){
+      this.userService = userService;
+    }
+
 
     //Added a get all users method so we can check in Ejercicio 4 that the user is no longer in the list
     @GetMapping()
     public List<UserModel> getUsers() {
-      return usersList;
+      return userService.getAllUsers();
     }
 
     /* 
@@ -49,13 +56,14 @@ public class UserController {
      */
     @GetMapping(path="/{userId}")
     public ResponseEntity<UserModel> getUser(@PathVariable String userId) {
-
-      for (UserModel user: usersList){
-        if (userId.equals(user.getUserId())){
-          return new ResponseEntity<UserModel>(user, HttpStatus.OK);
-        } 
-      }
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      /* 
+       * If the Optional returned by userService.getUserById(userId) contains a user, 
+       * then with .map() we transform that user into a ResponseEntity with the user and status OK
+       * If the Optional is empty, .orElse() returns a ResponseEntity with status NOT_FOUND
+       */
+      return userService.getUserById(userId)
+              .map(user -> new ResponseEntity<>(user, HttpStatus.OK))
+              .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /* 
@@ -76,19 +84,8 @@ public class UserController {
       @RequestParam @Past LocalDate birthDate,
       @RequestParam @Pattern(regexp = "^(M|F)$") String sex) {
 
-      //It's also needed to create a new user object with the received info
-      UserModel user = new UserModel(name, firstSurname, lastSurname, birthDate, sex, "1");
-      //Store the user in a list
-      usersList.add(user);
-      //It is requested to display the user info in the app console in a structured form
-      System.out.println("*****************");
-      System.out.println("Data:");
-      System.out.println("Name: " + user.getName());
-      System.out.println("First surname: " + user.getFirstSurname());
-      System.out.println("Second surname: " + user.getSecondSurname());
-      System.out.println("Birth date: " + user.getBirthDate());
-      System.out.println("Sex: " + user.getSex());
-
+      //create a new user object with the received info
+      UserModel user = userService.createUser(name, firstSurname, lastSurname, birthDate, sex);
       return new ResponseEntity<UserModel>(user, HttpStatus.CREATED);
     }
     
@@ -102,27 +99,10 @@ public class UserController {
 
     @PutMapping(path = "/{userId}")
     public ResponseEntity<UserModel> updateUser(@PathVariable String userId, @Valid @RequestBody UpdateUserDTO updatedUser) {
-      UserModel storedUser = null;
-      for (UserModel user: usersList){
-        if (userId.equals(user.getUserId())){
-          storedUser = user;
-          break;
-        } 
-      }
-      if (storedUser != null) {
-        if (updatedUser.getName() != null) storedUser.setName(updatedUser.getName());
-        if (updatedUser.getFirstSurname() != null) storedUser.setFirstSurname(updatedUser.getFirstSurname());
-        if (updatedUser.getSecondSurname() != null) storedUser.setSecondSurname(updatedUser.getSecondSurname());
-        if (updatedUser.getBirthDate() != null) storedUser.setBirthDate(updatedUser.getBirthDate());
-        if (updatedUser.getSex() != null) storedUser.setSex(updatedUser.getSex());
-
-
-
-        return new ResponseEntity<>(storedUser, HttpStatus.OK);
-    } else {
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-        
+      
+      return userService.updateUser(userId, updatedUser)
+                .map(user -> new ResponseEntity<>(user, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /* 
@@ -133,20 +113,14 @@ public class UserController {
     //Then, we call the @DeleteMapping("/{userId}") controller with the same url
     //Finally, we call the get all users method and we can se that the user is no longer in the list
     @DeleteMapping(path = "/{userId}")
-    public ResponseEntity<UserModel> deleteUser(@PathVariable String userId) {
-      UserModel storedUser = null;
-      for (UserModel user: usersList){
-        if (userId.equals(user.getUserId())){
-          storedUser = user;
-          break;
-        } 
-      }
-      if (storedUser != null) {
-        usersList.remove(storedUser);
+    public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
+
+      boolean deleted = userService.deleteUser(userId);
+      if (deleted) {
         return new ResponseEntity<>(HttpStatus.OK);
-    } else {
+      }else{
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+      }
         
     }
 

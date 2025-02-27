@@ -13,5 +13,5 @@ Added to the proyect "Ejercicio 4":
 
 Note: Check that the UserController file starts with an Uppercase U, otherwise the proyect will give errors
 
-Each exercise is done in its respective branch. If it's necessary to make corrections, they will be made in new branches with the identifier v2, v3... For example, exercise 1 was done in the branch "Ejercicio1", if in the future it is necessary to correct things, the improvements will go in "Ejercicio1v2"
+Each exercise was initially done in its respective branch. As I progressed further into the course, I realised that there were improvements/fixes that involved serveral if not all exercises, so it is not recommended to review the exercises this way, as their initial(branch) state differs greatly from the final state in "TodosEjercicios"
 

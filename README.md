@@ -6,6 +6,8 @@ Also, for the sake of simplicity, each exercise is highlighted in the code itsel
 
 The object model is replaced with "User" instead of "Persona" in this exercises, and "DNI" is replaced with "userId"
 
+Added to the project UserControllerTest
+Added to the project UserService (interface) and UserServiceImpl (implementation class)
 Added to the proyect "Ejercicio 4":
 1-Show the data from an user in the list.
 2-Remove the user using the DELETE rest method

@@ -1,8 +1,15 @@
 # fs-spring-dmoreno
 
-Branch "TodosEjercicios" contains the last version of all 4 exercises, If you want to see them in chronological order (the way they were done) read the last paragraph below, but bear in mind that those branches could be outdated.
+## Branch "TodosEjerciciosJPA" contains the last version of all exercises (JPA)
+
+
+## Branch "TodosEjercicios" contains the last version of all exercises (Spring)
+If you want to see them in chronological order (the way they were done, only the Spring part, not JPA) read the last paragraph below, but bear in mind that those branches could be outdated.
 
 Also, for the sake of simplicity, each exercise is highlighted in the code itself with annotations.
+
+
+## The following text corresponds ONLY to Spring Course (Not JPA):
 
 The object model is replaced with "User" instead of "Persona" in this exercises, and "DNI" is replaced with "userId"
 

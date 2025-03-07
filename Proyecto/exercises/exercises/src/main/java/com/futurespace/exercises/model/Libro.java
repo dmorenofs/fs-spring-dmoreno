@@ -4,12 +4,13 @@ import jakarta.persistence.*;
 
 import java.time.Year;
 
+//Ejercicio 2
 @Entity
 @Table(name = "Libros")
 public class Libro {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "isbn", nullable = false, length = 20, unique = true)
@@ -19,7 +20,7 @@ public class Libro {
     private String titulo;
 
     @Column(name = "ano_publicacion", nullable = false)
-    private Year añoPublicacion;
+    private int añoPublicacion;
 
     @ManyToOne
     @JoinColumn(name = "autor_id", nullable = false)
@@ -32,6 +33,10 @@ public class Libro {
     @ManyToOne
     @JoinColumn(name = "tematica_id", nullable = false)
     private Tematica tematica;
+
+    public Libro() {
+
+    }
 
     public Long getId() {
         return id;
@@ -57,11 +62,11 @@ public class Libro {
         this.titulo = titulo;
     }
 
-    public Year getAñoPublicacion() {
+    public int getAñoPublicacion() {
         return añoPublicacion;
     }
 
-    public void setAñoPublicacion(Year añoPublicacion) {
+    public void setAñoPublicacion(int añoPublicacion) {
         this.añoPublicacion = añoPublicacion;
     }
 
@@ -86,6 +91,15 @@ public class Libro {
     }
 
     public void setTematica(Tematica tematica) {
+        this.tematica = tematica;
+    }
+
+    public Libro(String isbn, String titulo, int añoPublicacion, Autor autor, Editorial editorial, Tematica tematica) {
+        this.isbn = isbn;
+        this.titulo = titulo;
+        this.añoPublicacion = añoPublicacion;
+        this.autor = autor;
+        this.editorial = editorial;
         this.tematica = tematica;
     }
 }

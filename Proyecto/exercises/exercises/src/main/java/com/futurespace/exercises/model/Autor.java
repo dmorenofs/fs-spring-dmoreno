@@ -6,13 +6,14 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+//Ejercicio 2
 @Entity
 @Table(name = "Autores")
 public class Autor {
 
     @Id
-    //Articulo curioso sobre IDENTITY VS SEQUENCE como en el video del curso : https://www.sqlshack.com/difference-between-identity-sequence-in-sql-server/
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //Articulo curioso sobre IDENTITY VS SEQUENCE  : https://www.sqlshack.com/difference-between-identity-sequence-in-sql-server/
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "nombre", nullable = false, length = 50)
@@ -24,8 +25,11 @@ public class Autor {
     @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
 
-    @OneToMany(mappedBy = "autor")
-    private List<Libro> libros;
+    public Autor() {
+
+    }
+
+
 
     public Long getId() {
         return id;
@@ -59,7 +63,15 @@ public class Autor {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public List<Libro> getLibros() {
-        return libros;
+
+    public Autor(String nombre, String apellidos, LocalDate fechaNacimiento) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Autor(String nombre, String apellidos) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
     }
 }

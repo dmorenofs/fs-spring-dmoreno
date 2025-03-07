@@ -4,12 +4,13 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+//Ejercicio 2
 @Entity
 @Table(name = "Editoriales")
 public class Editorial {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "nombre", nullable = false, length = 100)
@@ -18,8 +19,10 @@ public class Editorial {
     @Column(name = "razon_social", length = 250)
     private String razonSocial;
 
-    @OneToMany(mappedBy = "editorial")
-    private List<Libro> libros;
+    public Editorial() {
+
+    }
+
 
     public Long getId() {
         return id;
@@ -45,11 +48,11 @@ public class Editorial {
         this.razonSocial = razonSocial;
     }
 
-    public List<Libro> getLibros() {
-        return libros;
-    }
 
-    public void setLibros(List<Libro> libros) {
-        this.libros = libros;
+
+
+    public Editorial(String nombre, String razonSocial) {
+        this.nombre = nombre;
+        this.razonSocial = razonSocial;
     }
 }

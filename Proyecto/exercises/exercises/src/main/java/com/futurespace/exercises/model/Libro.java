@@ -20,7 +20,7 @@ public class Libro {
     private String titulo;
 
     @Column(name = "ano_publicacion", nullable = false)
-    private int añoPublicacion;
+    private Integer añoPublicacion;
 
     @ManyToOne
     @JoinColumn(name = "autor_id", nullable = false)
@@ -62,11 +62,11 @@ public class Libro {
         this.titulo = titulo;
     }
 
-    public int getAñoPublicacion() {
+    public Integer getAñoPublicacion() {
         return añoPublicacion;
     }
 
-    public void setAñoPublicacion(int añoPublicacion) {
+    public void setAñoPublicacion(Integer añoPublicacion) {
         this.añoPublicacion = añoPublicacion;
     }
 

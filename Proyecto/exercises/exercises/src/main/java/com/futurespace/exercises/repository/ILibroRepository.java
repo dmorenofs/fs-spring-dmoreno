@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 //Ejercicio3
 @Repository
@@ -20,18 +21,18 @@ public interface ILibroRepository extends JpaRepository<Libro, Long> {
     * según vas escribiendo el nombre del método, pero siempre está bien, concretamente este link fue muy
     * útil: https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html*/
     //Ejercicio5
-    List<Libro> findByAñoPublicacionGreaterThan(int año);
+    List<Libro> findByAñoPublicacionGreaterThan(Integer año);
 
     //Ejercicio 6.1
-    List<Libro> findByAñoPublicacionIs(int año);
+    List<Libro> findByAñoPublicacionIs(Integer año);
 
     //Ejercicio 6.2
-    List<Libro> findByIsbnIs(String isbn);
+    Optional<Libro> findByIsbnIs(String isbn);
 
     //Ejercicio 6.3
     List<Libro> findByEditorial_Nombre(String editorial);
 
     //Ejercicio 6.4
-    List<Libro> findByAñoPublicacionIsAndEditorial_Nombre(int año, String editorial);
+    List<Libro> findByAñoPublicacionIsAndEditorial_Nombre(Integer año, String editorial);
 
 }

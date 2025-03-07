@@ -130,10 +130,6 @@ public class EjerciciosBeca2025DmorenoApplication {
             System.out.println("Libros publicados en 2001:");
             printBooks(books3);
 
-            //Ejercicio 6.2
-            List<Libro> books4 = libroRepository.findByIsbnIs("87919878");
-            System.out.println("Libro con isbn 87919878:");
-            printBooks(books4);
 
             //Ejercicio 6.3
             List<Libro> books5 = libroRepository.findByEditorial_Nombre("RBA");

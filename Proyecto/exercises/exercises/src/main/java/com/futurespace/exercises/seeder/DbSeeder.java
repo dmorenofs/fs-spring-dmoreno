@@ -13,10 +13,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DbSeeder {
-    ITematicaRepository tematicaRepository;
-    ILibroRepository libroRepository;
-    IEditorialRepository editorialRepository;
-    IAutorRepository autorRepository;
+    private final ITematicaRepository tematicaRepository;
+    private final ILibroRepository libroRepository;
+    private final IEditorialRepository editorialRepository;
+    private final IAutorRepository autorRepository;
 
     public DbSeeder(ITematicaRepository tematicaRepository,
                     IEditorialRepository editorialRepository,

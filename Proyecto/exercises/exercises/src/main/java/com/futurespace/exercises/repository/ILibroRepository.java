@@ -1,6 +1,5 @@
 package com.futurespace.exercises.repository;
 
-import com.futurespace.exercises.model.Editorial;
 import com.futurespace.exercises.model.Libro;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,17 +13,17 @@ import java.util.Optional;
 public interface ILibroRepository extends JpaRepository<Libro, Long> {
 
     //Ejercicio4
-    @Query("SELECT l FROM Libro l WHERE l.añoPublicacion > 2001")
+    @Query("SELECT l FROM Libro l WHERE l.anioPublicacion > 2001")
     List<Libro> findBooksPublishedAfter2001QUERY();
 
     /*Con intelliJ no hace ni falta revisar la documentación, ya que te va marcando las posibilidades
     * según vas escribiendo el nombre del método, pero siempre está bien, concretamente este link fue muy
     * útil: https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html*/
     //Ejercicio5
-    List<Libro> findByAñoPublicacionGreaterThan(Integer año);
+    List<Libro> findByAnioPublicacionGreaterThan(Integer year);
 
     //Ejercicio 6.1
-    List<Libro> findByAñoPublicacionIs(Integer año);
+    List<Libro> findByAnioPublicacionIs(Integer year);
 
     //Ejercicio 6.2
     Optional<Libro> findByIsbnIs(String isbn);
@@ -33,6 +32,6 @@ public interface ILibroRepository extends JpaRepository<Libro, Long> {
     List<Libro> findByEditorial_Nombre(String editorial);
 
     //Ejercicio 6.4
-    List<Libro> findByAñoPublicacionIsAndEditorial_Nombre(Integer año, String editorial);
+    List<Libro> findByAnioPublicacionIsAndEditorial_Nombre(Integer year, String editorial);
 
 }

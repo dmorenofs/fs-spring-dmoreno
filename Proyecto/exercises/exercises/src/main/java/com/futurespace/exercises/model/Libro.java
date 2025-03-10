@@ -2,7 +2,6 @@ package com.futurespace.exercises.model;
 
 import jakarta.persistence.*;
 
-import java.time.Year;
 
 //Ejercicio 2
 @Entity
@@ -20,7 +19,7 @@ public class Libro {
     private String titulo;
 
     @Column(name = "ano_publicacion", nullable = false)
-    private Integer añoPublicacion;
+    private Integer anioPublicacion;
 
     @ManyToOne
     @JoinColumn(name = "autor_id", nullable = false)
@@ -62,12 +61,12 @@ public class Libro {
         this.titulo = titulo;
     }
 
-    public Integer getAñoPublicacion() {
-        return añoPublicacion;
+    public Integer getAnioPublicacion() {
+        return anioPublicacion;
     }
 
-    public void setAñoPublicacion(Integer añoPublicacion) {
-        this.añoPublicacion = añoPublicacion;
+    public void setAnioPublicacion(Integer anioPublicacion) {
+        this.anioPublicacion = anioPublicacion;
     }
 
     public Autor getAutor() {
@@ -94,10 +93,10 @@ public class Libro {
         this.tematica = tematica;
     }
 
-    public Libro(String isbn, String titulo, int añoPublicacion, Autor autor, Editorial editorial, Tematica tematica) {
+    public Libro(String isbn, String titulo, int anioPublicacion, Autor autor, Editorial editorial, Tematica tematica) {
         this.isbn = isbn;
         this.titulo = titulo;
-        this.añoPublicacion = añoPublicacion;
+        this.anioPublicacion = anioPublicacion;
         this.autor = autor;
         this.editorial = editorial;
         this.tematica = tematica;

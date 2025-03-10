@@ -29,7 +29,7 @@ public class LibroServiceImpl implements ILibroService{
 
     @Override
     public List<Libro> getLibrosByYear(Integer year) {
-        return libroRepository.findByAñoPublicacionIs(year);
+        return libroRepository.findByAnioPublicacionIs(year);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class LibroServiceImpl implements ILibroService{
 
     @Override
     public List<Libro> getLibrosByEditorialAndYear(Integer year, String editorial) {
-        return libroRepository.findByAñoPublicacionIsAndEditorial_Nombre(year,editorial);
+        return libroRepository.findByAnioPublicacionIsAndEditorial_Nombre(year,editorial);
     }
 
     @Override

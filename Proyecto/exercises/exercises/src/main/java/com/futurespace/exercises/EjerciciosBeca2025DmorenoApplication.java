@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Year;
 import java.util.Arrays;
 import java.util.List;
 
@@ -121,7 +120,7 @@ public class EjerciciosBeca2025DmorenoApplication {
             printBooks(books);
 
             //Ejercicio 5
-            List<Libro> books2 = libroRepository.findByAñoPublicacionGreaterThan(2001);
+            List<Libro> books2 = libroRepository.findByAnioPublicacionGreaterThan(2001);
             System.out.println("Libros publicados después de 2001:");
             printBooks(books2);
 
@@ -133,7 +132,7 @@ public class EjerciciosBeca2025DmorenoApplication {
         if (books.isEmpty()) {
             System.out.println("No hay libros que cumplan la condición");
         } else {
-            books.forEach(libro -> System.out.printf("%s - %s\n", libro.getTitulo(), libro.getAñoPublicacion()));
+            books.forEach(libro -> System.out.printf("%s - %s\n", libro.getTitulo(), libro.getAnioPublicacion()));
         }
     }
 
@@ -143,6 +142,6 @@ public class EjerciciosBeca2025DmorenoApplication {
      */
     @GetMapping("/health")
     public String hello() {
-      return String.format("health check ok");
+      return "health check ok";
     }
 }

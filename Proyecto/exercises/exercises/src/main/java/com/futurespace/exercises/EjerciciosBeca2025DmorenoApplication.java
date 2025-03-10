@@ -114,7 +114,7 @@ public class EjerciciosBeca2025DmorenoApplication {
             System.out.println("Base de datos inicializada correctamente");
             System.out.println("===========================================");
 
-
+            //En los ejercicios 4 y 5 se pide que el resultado se muestre por pantalla, por eso están aquí, el resto con postman
             //Ejercicio 4
             List<Libro> books = libroRepository.findBooksPublishedAfter2001QUERY();
             System.out.println("Libros publicados después de 2001:");
@@ -124,22 +124,6 @@ public class EjerciciosBeca2025DmorenoApplication {
             List<Libro> books2 = libroRepository.findByAñoPublicacionGreaterThan(2001);
             System.out.println("Libros publicados después de 2001:");
             printBooks(books2);
-
-            //Ejercicio 6.1
-            List<Libro> books3 = libroRepository.findByAñoPublicacionIs(2001);
-            System.out.println("Libros publicados en 2001:");
-            printBooks(books3);
-
-
-            //Ejercicio 6.3
-            List<Libro> books5 = libroRepository.findByEditorial_Nombre("RBA");
-            System.out.println("Libros de RBA:");
-            printBooks(books5);
-
-            //Ejercicio 6.4
-            List<Libro> books6 = libroRepository.findByAñoPublicacionIsAndEditorial_Nombre(1986, "PLANETA");
-            System.out.println("Libros de Planeta publicados en 1986:");
-            printBooks(books6);
 
         };
     }

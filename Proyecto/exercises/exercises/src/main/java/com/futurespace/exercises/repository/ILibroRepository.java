@@ -17,8 +17,9 @@ public interface ILibroRepository extends JpaRepository<Libro, Long> {
     List<Libro> findBooksPublishedAfter2001QUERY();
 
     /*Con intelliJ no hace ni falta revisar la documentación, ya que te va marcando las posibilidades
-    * según vas escribiendo el nombre del método, pero siempre está bien, concretamente este link fue muy
-    * útil: https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html*/
+    * según vas escribiendo el nombre del método, pero siempre está bien, concretamente estos links fueron muy
+    * útiles: https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html
+    * https://www.baeldung.com/the-persistence-layer-with-spring-data-jpa*/
     //Ejercicio5
     List<Libro> findByAnioPublicacionGreaterThan(Integer year);
 

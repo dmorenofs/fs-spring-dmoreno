@@ -1,6 +1,7 @@
 
-//Código para el ejercicio 1 (sacado de internet, no he podido hacerlo por mi mismo, no sabía ni por donde empezar
-//Pero al ponerlo falla, mientras que si no lo pones, solamente con el application.properties funciona
+/*Código para el ejercicio 1, sacado de internet-documentación, pero al ponerlo falla, mientras que si no lo pones,
+solamente con el application.properties funciona. Investigando un poco más, leí que ya no era necesario desde
+Spring 5 y que Spring hace toda la configuración de forma oculta siempre que tengas un application.properties válido*/
 
 //Lo dejo por si acaso
 /*package com.futurespace.exercises.config;
